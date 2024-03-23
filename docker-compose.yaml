@@ -26,6 +26,20 @@ services:
       interval: 30s
       retries: 10
 
+  # nosql:
+  #   image: mongo:7.0.7
+  #   container_name: mongo
+  #   ports:
+  #     - "27017:27017"
+
+  # mongo-admin:
+  #   image: mongo-express:1.0.2-20-alpine3.19
+  #   container_name: mongo-admin
+  #   ports:
+  #     - "8081:8081"
+  #   depends_on:
+  #     - nosql
+
   ingestion:
     container_name: python_runtime
     build:
