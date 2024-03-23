@@ -7,3 +7,6 @@ models:
 
   - name: active_corporations
     description: Each user belongs to a corporate user. Write an SQL script that can also calculate the weekly number of active corporations.
+
+  - name: summary
+    description: Finally, write an SQL script that can calculate the average, maximum and minimum number of events per user and corporate for each week in January 2024.
