@@ -1,2 +1,2 @@
-# foundernest-challenge
-FounerNest Junior Data Engineer challenge.
+# fn-challenge
+FN Junior Data Engineer challenge.
