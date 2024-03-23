@@ -1,0 +1,6 @@
+
+version: 2
+
+models:
+  - name: user_events_view
+    description: View to standardize column names or change format of any column if necessary

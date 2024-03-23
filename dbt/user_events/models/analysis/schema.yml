@@ -1,0 +1,9 @@
+
+version: 2
+
+models:
+  - name: customers_engagement
+    description: We want to measure our customers engagement, so you will need to write an SQL script that calculates weekly active users for January 2024 and saves it as a new table. An active user is any user that has an event for a given date.
+
+  - name: active_corporations
+    description: Each user belongs to a corporate user. Write an SQL script that can also calculate the weekly number of active corporations.
