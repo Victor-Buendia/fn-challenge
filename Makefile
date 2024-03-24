@@ -13,12 +13,11 @@ END = \033[0m
 deploy: env-check basic-services dbt-run info
 env-check:
 	sh ./env_check.sh
-	. .env
 basic-services:
-	docker-compose up --force-recreate -d
+	docker-compose up -d
 	docker-compose logs -f ingestion
 dbt-run:
-	docker-compose --profile transform up --force-recreate -d
+	docker-compose --profile transform up --no-deps dbt
 	docker-compose logs -f dbt
 info:
 	@echo "============== INFORMATION "==============
