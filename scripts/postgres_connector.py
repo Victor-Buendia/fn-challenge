@@ -2,6 +2,11 @@ import sqlalchemy
 from sqlalchemy.orm import sessionmaker
 from models.user_event import Base
 
+import psycopg2
+from sqlalchemy.dialects.sqlite import insert
+from psycopg2.extras import Json
+psycopg2.extensions.register_adapter(dict, Json)
+
 class PostgresConnector():
     def __init__(self, logger, environment):
         self.logger = logger
@@ -32,6 +37,19 @@ class PostgresConnector():
     def execute_stmt(self, stmt):
         self.session.execute(stmt)
         self.session.commit()
+
+    def insert_on_conflict(self, Table, pks: list, data: dict) -> int:
+        insert_stmt = insert(Table).values(data)
+        insert_stmt = insert_stmt.on_conflict_do_update(
+            index_elements=pks,
+            set_=dict(insert_stmt.excluded)
+        )
+        try:
+            self.execute_stmt(insert_stmt)
+            return 1
+        except:
+            return -1
+
 
     @property
     def get_address(self):

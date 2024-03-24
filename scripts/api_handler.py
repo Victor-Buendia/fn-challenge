@@ -3,11 +3,15 @@ import json
 import os
 
 from utils import get_str_dates
+from validation.schemas import UserEvent as UserEventValidator
+from models.user_event import UserEvent
+from colors import COLORS
 
 class ApiHandler():
-	def __init__(self,logger,environment):
+	def __init__(self,logger,environment,postgres_connection):
 		self.logger = logger
 		self.env = environment
+		self.postgres_conn = postgres_connection
 		self.base_url = f"{self.env.API_URL}"
 		os.makedirs('./data', exist_ok=True)
 
@@ -28,13 +32,21 @@ class ApiHandler():
 
 	def request_month(self, start_date: str, end_date: str) -> list[dict]:
 		dates_to_fetch = get_str_dates(start=start_date, end=end_date)
-		data_to_return = list()
+		total_inserted_data_counter = 0
 
 		for day in dates_to_fetch:
-			data = self.request_day(request_date=day)
-			with open(f"./data/{day}.json",'w') as file:
-				json.dump(data, fp=file, indent=2)
-			if data != []:
-				data_to_return.extend(data)
-		return data_to_return
+			inserted_data_counter = 0
+			user_events_data = self.request_day(request_date=day)
+			user_events_validated = [UserEventValidator.model_validate(user_event).dict() for user_event in user_events_data]
+			if len(user_events_validated) > 0:
+				for user_event in user_events_validated:
+					inserted_data_counter += self.postgres_conn.insert_on_conflict(
+						Table=UserEvent,
+						pks=[UserEvent.event_time, UserEvent.device_id],
+						data=user_event
+					)
+					if ((inserted_data_counter+total_inserted_data_counter) % 200) == 0:
+						self.logger.info(f"{COLORS['GREEN']}{inserted_data_counter+total_inserted_data_counter} TOTAL RECORDS INGESTED ALREADY...{COLORS['WHITE']}\n")
+				total_inserted_data_counter += inserted_data_counter
+				self.logger.info(f"DATA FROM DAY [{COLORS['PURPLE']}{day}{COLORS['WHITE']}] INSERTED << {inserted_data_counter} >> RECORDS SUCCESSFULLY AT (${self.postgres_conn.get_address})")
 	
