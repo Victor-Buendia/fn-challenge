@@ -68,7 +68,7 @@ class Main():
 			db=self.environment.POSTGRES_DB,
 		)
 		self.postgres_conn.create_tables()
-		# self.api.request_month('2024-01-01','2024-02-01')
+		self.api.request_month('2024-01-01','2024-02-01')
 		self.json_insert()
 		
 if __name__ == "__main__":

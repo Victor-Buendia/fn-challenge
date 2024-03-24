@@ -1,8 +1,8 @@
 version: '3.8'
 
 x-common:
+  &common-env
   environment:
-    &common-env
     POSTGRES_DB: ${POSTGRES_DB}
     POSTGRES_USER: ${POSTGRES_USER}
     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -17,8 +17,7 @@ services:
     restart: on-failure
     ports:
       - '9876:5432'
-    environment:
-      <<: *common-env
+    <<: *common-env
     volumes:
       - ./db:/docker-entrypoint-initdb.d
     healthcheck:
@@ -26,27 +25,31 @@ services:
       interval: 30s
       retries: 10
 
-  # nosql:
-  #   image: mongo:7.0.7
-  #   container_name: mongo
-  #   ports:
-  #     - "27017:27017"
-
-  # mongo-admin:
-  #   image: mongo-express:1.0.2-20-alpine3.19
-  #   container_name: mongo-admin
-  #   ports:
-  #     - "8081:8081"
-  #   depends_on:
-  #     - nosql
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:8.4
+    <<: *common-env
+    environment:
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
+      PGADMIN_DEFAULT_EMAIL: "foundernest@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "foundernest"
+      PGADMIN_DEFAULT_SERVER: rdbms
+      POSTGRES_PORT: 5432
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - ./pgadmin4:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    depends_on:
+      - rdbms
 
   ingestion:
     container_name: python_runtime
     build:
       context: ./
       dockerfile: python.Dockerfile
-    environment:
-      <<: *common-env
+    <<: *common-env
     volumes:
       - ./scripts:/app
     command: >
@@ -68,8 +71,7 @@ services:
     depends_on:
       - rdbms
       - ingestion
-    environment:
-      <<: *common-env
+    <<: *common-env
     working_dir: /dbt/user_events
     command: run
     tty: true

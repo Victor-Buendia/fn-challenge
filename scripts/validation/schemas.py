@@ -37,7 +37,7 @@ class UserEvent(BaseModel):
     data: GroupData
     language: Optional[str] = None
     event_type: str
-    device_id: str
+    device_id: Annotated[str, StringConstraints(max_length=36)]
     server_upload_time: int
     server_received_time: int
     user_id: int
@@ -92,6 +92,3 @@ class UserEvent(BaseModel):
             "data_type": self.data_type,
             "event_time": self.event_time,
         }
-
-class UserEventList(RootModel):
-    root: List[UserEvent]
