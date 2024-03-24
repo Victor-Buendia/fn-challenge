@@ -3,8 +3,7 @@
 with source_data as (
 
     SELECT
-		"id"
-		, "inserted_at_utc"
+		"inserted_at_utc"
 		, "amp_id"
 		, "city"
 		, "client_event_time"

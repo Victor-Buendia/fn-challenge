@@ -2,29 +2,37 @@
 
 with daily_users as (
 
-    SELECT
+    SELECT DISTINCT
 		"date",
-		COUNT("user_id") AS active_users,
-		COUNT("user_corporate_id") AS active_corporations
+		"user_id",
+		"user_corporate_id",
+		COUNT("event_time") AS events_count
 	FROM
 		{{ ref('user_events_view') }}
+	WHERE
+		EXTRACT(YEAR FROM "date") = 2024
+		AND EXTRACT(MONTH FROM "date") = 1
 	GROUP BY
-		date
-
+		"date",
+		"user_id",
+		"user_corporate_id"
 ),
 
 summary as (
 	SELECT
 		TO_CHAR("date", 'yyyy-ww') AS week_of_year,
-		AVG(active_users) AS avg_active_users,
-		MAX(active_users) AS max_active_users,
-		MIN(active_users) AS min_active_users,
-		AVG(active_corporations) AS avg_active_corporations,
-		MAX(active_corporations) AS max_active_corporations,
-		MIN(active_corporations) AS min_active_corporations
+		"user_id",
+		"user_corporate_id",
+		AVG(events_count) AS avg_events_count,
+		MAX(events_count) AS max_events_count,
+		MIN(events_count) AS min_events_count
 	FROM
 		daily_users
 	GROUP BY
+		week_of_year,
+		"user_id",
+		"user_corporate_id"
+	ORDER BY
 		week_of_year
 )
 

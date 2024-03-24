@@ -9,9 +9,12 @@ with source_data as (
 		{{ ref('user_events_view') }}
 	WHERE
 		user_corporate_status = 'active'
+		AND EXTRACT(YEAR FROM "date") = 2024
+		AND EXTRACT(MONTH FROM "date") = 1
 	GROUP BY
 		week_of_year
-
+	ORDER BY
+		week_of_year
 )
 
 select *
