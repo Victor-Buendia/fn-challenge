@@ -7,7 +7,6 @@ Base = declarative_base()
 
 class UserEvent(Base):
     __tablename__ = "user_events"
-    id = Column(Integer, primary_key=True, autoincrement=True)
     inserted_at_utc = Column(DateTime, default=datetime.utcnow)
     amp_id = Column(BigInteger)
     city = Column(String(250))
@@ -16,8 +15,8 @@ class UserEvent(Base):
     country = Column(String(250))
     data_type = Column(String(250))
     date = Column(DateTime)
-    device_id = Column(String(250))
-    event_time = Column(BigInteger)
+    device_id = Column(String(250), primary_key=True)
+    event_time = Column(BigInteger, primary_key=True)
     event_type = Column(String(250))
     group_first_event = Column(JSONB)
     group_ids = Column(JSONB)
@@ -38,7 +37,7 @@ class UserEvent(Base):
     user_signup_date = Column(DateTime)
     user_status = Column(String(250))
 
-    # __table_args__ = (PrimaryKeyConstraint("user_id", "processed_time"),)
+    __table_args__ = (PrimaryKeyConstraint("device_id", "event_time"),)
 
     def to_dict(self):
         return {col.name: getattr(self, col.name) for col in self.__table__.columns}
