@@ -10,7 +10,7 @@ from postgres_connector import PostgresConnector
 from validation.schemas import UserEvent as UserEventValidator
 from models.user_event import UserEvent
 
-from sqlalchemy import insert, delete
+from sqlalchemy.dialects.sqlite import insert
 from psycopg2.extras import Json
 psycopg2.extensions.register_adapter(dict, Json)
 
@@ -33,6 +33,7 @@ class Main():
 		# self.mongo_conn = MongoConnector(self.logger, self.environment)
 
 	def json_insert(self):
+		i = 0
 		files = os.listdir('./data')
 		for json_file in files:
 			with open(f'./data/{json_file}','r') as file:
@@ -43,27 +44,19 @@ class Main():
 					# Flattening nested fields to insert into RDBMS
 					user_events_validated = [UserEventValidator.model_validate(user_event).dict() for user_event in user_events_data]
 
-					delete_stmt = delete(UserEvent).where(UserEvent.date.in_(dates_to_insert))
-					self.logger.info(f"REMOVING DATA FROM DATES {dates_to_insert} TO UPDATE WITH NEW RECORDS...")
-					self.postgres_conn.execute_stmt(delete_stmt)
-
-					insert_stmt = insert(UserEvent).values(user_events_validated)
-					self.logger.info(f"INSERTING {len(user_events_validated)} RECORDS INTO TABLE \"{UserEvent.__tablename__.upper()}\"...")
-					self.postgres_conn.execute_stmt(insert_stmt)
+					for user_event in user_events_validated:
+						insert_stmt = insert(UserEvent).values(user_event)
+						insert_stmt = insert_stmt.on_conflict_do_update(
+							index_elements=[UserEvent.event_time, UserEvent.device_id],
+							set_=dict(insert_stmt.excluded)
+						)
+						self.postgres_conn.execute_stmt(insert_stmt)
+						i += 1
+						if ((i % 200) == 0):
+							self.logger.info(f"{json_file} >> {i} RECORDS IN TOTAL INSERTED INTO TABLE \"{UserEvent.__tablename__.upper()}\"...")
 			# os.remove(f"./data/{json_file}")
-
-	def insert_data(self):
-		user_events_data = self.api.request_month('2024-01-01','2024-01-05')
-		dates_to_insert = {UserEventValidator.model_validate(user_event).dict()["date"] for user_event in user_events_data}
-		user_events_validated = [UserEventValidator.model_validate(user_event).dict() for user_event in user_events_data]
-
-		delete_stmt = delete(UserEvent).where(UserEvent.date.in_(dates_to_insert))
-		self.logger.info(f"REMOVING DATA FROM DATES {dates_to_insert} TO UPDATE DATES EVENTS...")
-		self.postgres_conn.execute_stmt(delete_stmt)
-
-		insert_stmt = insert(UserEvent).values(user_events_validated)
-		self.logger.info(f"INSERTING {len(user_events_validated)} RECORDS INTO TABLE \"{UserEvent.__tablename__.upper()}\"...")
-		self.postgres_conn.execute_stmt(insert_stmt)
+		if ((i % 200) != 0):
+			self.logger.info(f"{json_file} >> {i} RECORDS IN TOTAL INSERTED INTO TABLE \"{UserEvent.__tablename__.upper()}\"...")
 	
 	def start(self):
 		print('Main program executed.')
@@ -75,7 +68,6 @@ class Main():
 			db=self.environment.POSTGRES_DB,
 		)
 		self.postgres_conn.create_tables()
-		# self.insert_data()
 		# self.api.request_month('2024-01-01','2024-02-01')
 		self.json_insert()
 		

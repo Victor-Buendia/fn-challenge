@@ -30,7 +30,6 @@ class PostgresConnector():
         Base.metadata.create_all(self.__engine)
 
     def execute_stmt(self, stmt):
-        self.logger.info(f"EXECUTING STATEMENT \"{str(stmt).split('(')[0].upper()}[...]\" AT DATABASE {self.get_address}...")
         self.session.execute(stmt)
         self.session.commit()
 
