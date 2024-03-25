@@ -13,6 +13,10 @@ class ApiHandler():
 		self.postgres_conn = postgres_connection
 		self.base_url = f"{self.env.API_URL}"
 
+	class BadRequestException(Exception):
+		def __init__(self, message):
+			super().__init__(message)
+
 	def request_day(self, request_date: str) -> list[dict]:
 		headers = {
 			"api-token": self.env.API_TOKEN
@@ -20,15 +24,16 @@ class ApiHandler():
 		url = f"{self.base_url}?date={request_date}"
 
 		response = requests.request("GET", url, headers=headers)
+		loaded_data = json.loads(response.text)
 		if response.status_code == 200:
-			loaded_data = json.loads(response.text)
 			self.logger.info(f"{len(loaded_data)} RECORDS RETRIEVED FOR DAY {request_date}")
 			return loaded_data
 		else:
-			if response.text["detail"] == "No event found for date":
+			if loaded_data["detail"] == "No event found for date":
 				self.logger.info(f"NO DATA RETRIEVED FOR DAY {request_date}")
 			else:
 				self.logger.info(f"BAD REQUEST ERROR ({response.status_code}): {response.text}")
+				raise self.BadRequestException(response.text)
 			return []
 
 	def request_month(self, start_date: str, end_date: str) -> list[dict]:

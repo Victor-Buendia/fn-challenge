@@ -1,6 +1,7 @@
 *.json
 pgadmin4/*
 !pgadmin4/pgadmin4.db
+scripts/data
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
