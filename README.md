@@ -4,6 +4,27 @@ FN Junior Data Engineer challenge. Candidate: Victor Buendia.
 
 ## Table of Contents
 
+- [fn-challenge](#fn-challenge)
+  - [Table of Contents](#table-of-contents)
+  - [Work timetable](#work-timetable)
+  - [Overview](#overview)
+    - [Tasks](#tasks)
+  - [Data-related decisions](#data-related-decisions)
+  - [Project considerations](#project-considerations)
+  - [Usage](#usage)
+  - [Requirements](#requirements)
+  - [How to run](#how-to-run)
+    - [Environment Variables](#environment-variables)
+    - [Starting services](#starting-services)
+  - [Tech Stack](#tech-stack)
+  - [Code structure](#code-structure)
+  - [Screenshots](#screenshots)
+    - [Ingested data from API (flattened)](#ingested-data-from-api-flattened)
+    - [Users engagement (per week)](#users-engagement-per-week)
+    - [Active corporations per week](#active-corporations-per-week)
+    - [Avg, max and min number of events per user and corporate each week](#avg-max-and-min-number-of-events-per-user-and-corporate-each-week)
+  - [Final considerations](#final-considerations)
+
 ## Work timetable
 
 The below timetable gives an estimate of time spent doing each task required to complete this challenge.
