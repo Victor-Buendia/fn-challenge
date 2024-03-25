@@ -144,6 +144,8 @@ The quickest way to start the project is executing a `make deploy` command. This
 3. *dbt-run:* When the ingestion of step (2) is done, starts and runs dbt to execute the SQL scripts under `dbt/user_events/models` directory.
 4. *info:* Displays some useful information regarding map porting of the services.
 
+The PgAdmin4 server can be accessed at [http://localhost:5050](http://localhost:5050).
+
 ## Tech Stack
 
 The basic technologies used here are:
