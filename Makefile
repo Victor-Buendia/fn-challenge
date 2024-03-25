@@ -14,7 +14,7 @@ deploy: env-check basic-services dbt-run info
 env-check:
 	sh ./env_check.sh
 basic-services:
-	docker-compose down
+	docker-compose down --remove-orphans
 	docker-compose up -d rdbms pgadmin
 	docker-compose up ingestion
 dbt-run:
