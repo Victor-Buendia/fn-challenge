@@ -25,7 +25,10 @@ class ApiHandler():
 			self.logger.info(f"{len(loaded_data)} RECORDS RETRIEVED FOR DAY {request_date}")
 			return loaded_data
 		else:
-			self.logger.info(f"NO DATA RETRIEVED FOR DAY {request_date}")
+			if response.text["detail"] == "No event found for date":
+				self.logger.info(f"NO DATA RETRIEVED FOR DAY {request_date}")
+			else:
+				self.logger.info(f"BAD REQUEST ERROR ({response.status_code}): {response.text}")
 			return []
 
 	def request_month(self, start_date: str, end_date: str) -> list[dict]:
@@ -35,6 +38,10 @@ class ApiHandler():
 		for day in dates_to_fetch:
 			inserted_data_counter = 0
 			user_events_data = self.request_day(request_date=day)
+
+			with open(f"./data/{day}.json",'w') as file:
+				json.dump(user_events_data, fp=file, indent=2)
+
 			user_events_validated = [UserEventValidator.model_validate(user_event).dict() for user_event in user_events_data]
 			if len(user_events_validated) > 0:
 				for user_event in user_events_validated:
