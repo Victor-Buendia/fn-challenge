@@ -2,9 +2,9 @@
 
 if ! [ -e .env ]; then
 	echo """
-POSTGRES_DB=
-POSTGRES_USER=
-POSTGRES_PASSWORD=
+POSTGRES_DB=users
+POSTGRES_USER=foundernest
+POSTGRES_PASSWORD=password
 API_TOKEN=
 API_URL=
 	""" > .env
