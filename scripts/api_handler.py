@@ -1,6 +1,5 @@
 import requests
 import json
-import os
 
 from utils import get_str_dates
 from validation.schemas import UserEvent as UserEventValidator
@@ -13,7 +12,6 @@ class ApiHandler():
 		self.env = environment
 		self.postgres_conn = postgres_connection
 		self.base_url = f"{self.env.API_URL}"
-		os.makedirs('./data', exist_ok=True)
 
 	def request_day(self, request_date: str) -> list[dict]:
 		headers = {
