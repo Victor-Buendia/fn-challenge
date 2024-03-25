@@ -20,7 +20,8 @@ with daily_users as (
 
 summary as (
 	SELECT
-		TO_CHAR("date", 'yyyy-ww') AS week_of_year,
+		CAST(TO_CHAR("date", 'yyyy') AS INT) AS "year",
+		CAST(TO_CHAR("date", 'ww') AS INT) AS week_of_year,
 		"user_id",
 		"user_corporate_id",
 		AVG(events_count) AS avg_events_count,
@@ -29,10 +30,12 @@ summary as (
 	FROM
 		daily_users
 	GROUP BY
+		"year",
 		week_of_year,
 		"user_id",
 		"user_corporate_id"
 	ORDER BY
+		"year",
 		week_of_year
 )
 
