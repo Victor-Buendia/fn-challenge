@@ -26,4 +26,4 @@ info:
 	@echo "- PgAdmin4 server at $(UNDERLINE)$(CYAN)http://localhost:5050$(END)"
 	@echo "- PostGres server at $(UNDERLINE)$(YELLOW)http://localhost:9876$(END)"
 	@echo ""
-	@echo "- Python script and Dbt run are both ran in an $(BOLD)efemeral containers$(END)"
+	@echo "- Python script and Dbt run are both ran in an $(BOLD)ephemeral containers$(END)"

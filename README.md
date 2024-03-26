@@ -221,7 +221,6 @@ Here are the most important modules developed for this project and their objecti
 |--|--|--|
 | PostGres | RDS | Cloud SQL |
 | Docker Compose | EKS | GKE |
-| .env | KMS | Cloud KMS |
 | ... |||
 
 - It's worth emphasizing that environment variables would be saved in an AWS Parameter Store or Secrets Manager, for example, in a Cloud-based architecture.
