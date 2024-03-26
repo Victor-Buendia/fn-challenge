@@ -90,7 +90,7 @@ This section explains decisions made regarding the data provided by the API and 
   - To store the API data into PostGres, I've chosen `event_time` and `device_id` as a composite primary key of the `user_events` table. This decision was made thinking about a business rule where it might be very uncommon to have a single unique event to have both of the fields equal, once triggering the same event with the same *device_id* at the exact same *event_time* is a rare situation. Besides, choosing these fields as a composite primary key, we ensure that if an event has both of the fields equal to an existing record in the database, we only update that record fields, instead of inserting a duplicate.
 - **Active corporation concept**
   - For the SQL script in `dbt/user_events/models/analysis/active_corporations.sql`, a corporation was considered active when it had an event record and also when its `user_corporate_status = 'active'`.
-- **Standardize null values**
+- **Standardize empty values**
   - In fields like `city` and `country` I have converted the string "null" in actual `NULL` values. Also, in `group_first_event` and `group_ids` fields, I have converted `NULL` values into empty dictionaries `{}`. Both decisions were intending to standardize the absence of value behavior in those fields.
 
 ## Project considerations
