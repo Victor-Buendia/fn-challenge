@@ -31,18 +31,19 @@ The below timetable gives an estimate of time spent doing each task required to 
 
 |Task|Time spent (H:MM:SS)|
 |--|:--:|
-| Reading challenge | 0:10:00|
+| Reading challenge | 0:26:00|
 | Creating [diagram](https://github.com/Victor-Buendia/fn-challenge/blob/main/assets/diagram.png) | 0:48:00|
-| Creating [docker services rdbms and ingestion](https://github.com/Victor-Buendia/fn-challenge/blob/main/docker-compose.yaml) | 0:57:00|
-| Creating [DBT service in docker](https://github.com/Victor-Buendia/fn-challenge/blob/44e11d1cff3c3c64d9b345b57a04f31f85470620/docker-compose.yaml#L61) | 1:01:00|
-| Setting up [PgAdmin in docker services](https://github.com/Victor-Buendia/fn-challenge/blob/44e11d1cff3c3c64d9b345b57a04f31f85470620/docker-compose.yaml#L28) | 0:54:00|
-| Creating python function to retrieve `{request data}` for [one day](https://github.com/Victor-Buendia/fn-challenge/blob/2798f97fc152804539defe8e3d0b3d86c30bf64f/scripts/api_handler.py#L18) and for a [whole month](https://github.com/Victor-Buendia/fn-challenge/blob/2798f97fc152804539defe8e3d0b3d86c30bf64f/scripts/api_handler.py#L33) (dates in between two dates) | 2:12:00|
-| Creating [models](https://github.com/Victor-Buendia/fn-challenge/blob/main/scripts/models/user_event.py) SQL ALchemy | 1:36:00|
-| Validations with [Pydantic Models](https://github.com/Victor-Buendia/fn-challenge/blob/main/scripts/validation/schemas.py) | 1:18:00|
-| Creating SQL script for ["We want to measure our customers engagement, so you will need to write an SQL script that calculates weekly active users for January 2024 and saves it as a new table. An active user is any user that has an event for a given date."](https://github.com/Victor-Buendia/fn-challenge/blob/main/dbt/user_events/models/analysis/customers_engagement.sql) | 0:12:00|
-| Creating SQL script for ["Each user belongs to a corporate user. Write an SQL script that can also calculate the weekly number of active corporations."](https://github.com/Victor-Buendia/fn-challenge/blob/main/dbt/user_events/models/analysis/active_corporations.sql) | 0:18:00|
-| Creating SQL script for ["Finally, write an SQL script that can calculate the average, maximum and minimum number of events per user and corporate for each week in January 2024."](https://github.com/Victor-Buendia/fn-challenge/blob/main/dbt/user_events/models/analysis/summary.sql) | 0:25:00|
-| Total | 9:51:00 |
+| Creating [docker services rdbms and ingestion](https://github.com/Victor-Buendia/fn-challenge/blob/main/docker-compose.yaml) | 1:17:00|
+| Creating [DBT service in docker](https://github.com/Victor-Buendia/fn-challenge/blob/44e11d1cff3c3c64d9b345b57a04f31f85470620/docker-compose.yaml#L61) | 1:21:00|
+| Setting up [PgAdmin in docker services](https://github.com/Victor-Buendia/fn-challenge/blob/44e11d1cff3c3c64d9b345b57a04f31f85470620/docker-compose.yaml#L28) | 1:14:00|
+| Creating python function to retrieve `{request data}` for [one day](https://github.com/Victor-Buendia/fn-challenge/blob/2798f97fc152804539defe8e3d0b3d86c30bf64f/scripts/api_handler.py#L18) and for a [whole month](https://github.com/Victor-Buendia/fn-challenge/blob/2798f97fc152804539defe8e3d0b3d86c30bf64f/scripts/api_handler.py#L33) (dates in between two dates) | 2:52:00|
+| Creating [models](https://github.com/Victor-Buendia/fn-challenge/blob/main/scripts/models/user_event.py) SQL ALchemy | 2:16:00|
+| Validations with [Pydantic Models](https://github.com/Victor-Buendia/fn-challenge/blob/main/scripts/validation/schemas.py) | 1:55:00|
+| Creating SQL script for ["We want to measure our customers engagement, so you will need to write an SQL script that calculates weekly active users for January 2024 and saves it as a new table. An active user is any user that has an event for a given date."](https://github.com/Victor-Buendia/fn-challenge/blob/main/dbt/user_events/models/analysis/customers_engagement.sql) | 0:16:00|
+| Creating SQL script for ["Each user belongs to a corporate user. Write an SQL script that can also calculate the weekly number of active corporations."](https://github.com/Victor-Buendia/fn-challenge/blob/main/dbt/user_events/models/analysis/active_corporations.sql) | 0:22:00|
+| Creating SQL script for ["Finally, write an SQL script that can calculate the average, maximum and minimum number of events per user and corporate for each week in January 2024."](https://github.com/Victor-Buendia/fn-challenge/blob/main/dbt/user_events/models/analysis/summary.sql) | 0:27:00|
+| Creating README and structuring GitHub repo | 2:30:00 |
+| Total | 15:44:00 |
 
 ## Overview
 
