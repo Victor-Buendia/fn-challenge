@@ -23,6 +23,8 @@ FN Junior Data Engineer challenge. Candidate: Victor Buendia.
     - [Users engagement (per week)](#users-engagement-per-week)
     - [Active corporations per week](#active-corporations-per-week)
     - [Avg, max and min number of events per user and corporate each week](#avg-max-and-min-number-of-events-per-user-and-corporate-each-week)
+    - [Data ingestion](#data-ingestion)
+    - [Dbt run](#dbt-run)
   - [Final considerations](#final-considerations)
 
 ## Work timetable
@@ -212,6 +214,14 @@ Here are the most important modules developed for this project and their objecti
 ### Avg, max and min number of events per user and corporate each week
 
 ![summary](./assets/summary.png)
+
+### Data ingestion
+
+![data_ingestion](./assets/data_ingestion.png)
+
+### Dbt run
+
+![dbt_run](./assets/dbt_run.png)
 
 ## Final considerations
 

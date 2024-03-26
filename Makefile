@@ -18,7 +18,6 @@ basic-services:
 	docker-compose up ingestion
 dbt-run:
 	docker-compose --profile transform up --no-deps dbt
-	docker-compose logs -f dbt
 info:
 	@echo "============== INFORMATION "==============
 	@echo ""
