@@ -14,7 +14,7 @@ deploy: env-check basic-services dbt-run info
 env-check:
 	sh ./env_check.sh
 basic-services:
-	docker-compose up -d rdbms pgadmin --force-recreate
+	docker-compose up --force-recreate -d rdbms pgadmin
 	docker-compose up ingestion
 dbt-run:
 	docker-compose --profile transform up --no-deps dbt
